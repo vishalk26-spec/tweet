@@ -35,7 +35,8 @@ export async function saveChatToS3(userId: string, chatId: string, chatData: Cha
     });
 
     if (!response.ok) {
-      throw new Error('Failed to save chat data');
+      const error = await response.json();
+      throw new Error(error.message || 'Failed to save chat data');
     }
   } catch (error) {
     console.error('Error saving chat to S3:', error);
@@ -57,7 +58,8 @@ export async function getChatFromS3(userId: string, chatId: string): Promise<Cha
     });
 
     if (!response.ok) {
-      throw new Error('Failed to get chat data');
+      const error = await response.json();
+      throw new Error(error.message || 'Failed to get chat data');
     }
 
     const { data } = await response.json();
@@ -81,7 +83,8 @@ export async function listUserChats(userId: string): Promise<string[]> {
     });
 
     if (!response.ok) {
-      throw new Error('Failed to list chats');
+      const error = await response.json();
+      throw new Error(error.message || 'Failed to list chats');
     }
 
     const { chatIds } = await response.json();

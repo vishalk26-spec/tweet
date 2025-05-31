@@ -1,5 +1,6 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { NextResponse } from 'next/server';
+import { currentUser } from '@clerk/nextjs/server';
 
 // Initialize the Gemini API
 const genAI = new GoogleGenerativeAI(process.env.NEXT_GEMINI_API_KEY || '');
@@ -20,6 +21,11 @@ Return ONLY the tweet text, no explanations or additional text.`;
 
 export async function POST(req: Request) {
   try {
+    const user = await currentUser();
+    if (!user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const { prompt, tone, goal, audience, conversationHistory } = await req.json();
 
     if (!prompt) {
