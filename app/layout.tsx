@@ -35,6 +35,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
     <html lang="en">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://images.emojiterra.com/google/noto-emoji/unicode-16.0/color/1024px/1f426.png" />
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <header className="flex justify-end items-center p-4 gap-4 h-16">
           <SignedOut>
@@ -42,7 +43,10 @@ export default function RootLayout({
             <SignUpButton />
           </SignedOut>
           <SignedIn>
+            <div className="flex items-center gap-4 text-5xl">
             <UserButton />
+            </div>
+            
           </SignedIn>
         </header>
         {children}
